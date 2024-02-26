@@ -15,6 +15,7 @@ import { Menu } from '@mui/icons-material';
 import LinearProgress from "@mui/material/LinearProgress";
 import {useAppSelector} from "./store";
 import {RequestStatusType} from "./app-reducer";
+import {CustomizedSnackbars} from "../components/ErrorSnackbar/ErrorSnackbar";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
 
     return (
         <div className="App">
+            <CustomizedSnackbars/>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
