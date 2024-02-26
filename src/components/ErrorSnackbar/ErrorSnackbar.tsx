@@ -19,7 +19,7 @@ export function CustomizedSnackbars() {
 
     return (
         <div>
-            <Snackbar open={isError !== null} autoHideDuration={6000} onClose={handleClose}
+            <Snackbar open={!!isError} autoHideDuration={6000} onClose={handleClose}
                       anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}>
                 <Alert
                     onClose={handleClose}
