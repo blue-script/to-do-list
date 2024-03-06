@@ -1,35 +1,33 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
+import React from 'react';
 import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import {useAppDispatch, useAppSelector} from "../../app/store";
-import {setError} from "../../app/app-reducer";
+import MuiAlert, {AlertProps} from '@mui/material/Alert';
+import {setAppErrorAC} from '../../app/app-reducer';
+import {useAppDispatch, useAppSelector} from '../../app/store';
 
-export function CustomizedSnackbars() {
-    const isError = useAppSelector(state => state.app.error)
-    const dispatch = useAppDispatch()
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
-    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+
+export function ErrorSnackbar() {
+
+    const error = useAppSelector<string | null>(state => state.app.error)
+
+    const dispatch = useAppDispatch();
+
+    const handleClose = (event?: React.SyntheticEvent<any> | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
-
-        dispatch(setError(null))
+        dispatch(setAppErrorAC(null))
     };
 
     return (
-        <div>
-            <Snackbar open={!!isError} autoHideDuration={6000} onClose={handleClose}
-                      anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}>
-                <Alert
-                    onClose={handleClose}
-                    severity="error"
-                    variant="filled"
-                    sx={{width: '100%'}}
-                >
-                    {isError}
-                </Alert>
-            </Snackbar>
-        </div>
+        <Snackbar open={error !== null} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="error" sx={{width: '100%'}}>
+                {error}
+            </Alert>
+        </Snackbar>
     );
 }
