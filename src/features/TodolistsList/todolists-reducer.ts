@@ -1,6 +1,8 @@
 import {todolistsAPI, TodolistType} from '../../api/todolists-api'
 import {Dispatch} from 'redux'
 import {RequestStatusType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer'
+import {AppThunkDispatch} from "../../app/store";
+import {fetchTasksTC, SetTasksActionType} from "./tasks-reducer";
 
 const initialState: Array<TodolistDomainType> = []
 
@@ -19,6 +21,8 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
             return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.status} : tl)
         case 'SET-TODOLISTS':
             return action.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
+        case "CLEAR-DATA":
+            return initialState
         default:
             return state
     }
@@ -38,20 +42,29 @@ export const changeTodolistFilterAC = (id: string, filter: FilterValuesType) => 
     filter
 } as const)
 export const changeTodolistEntityStatusAC = (id: string, status: RequestStatusType) => ({
-    type: 'CHANGE-TODOLIST-ENTITY-STATUS', id, status } as const)
+    type: 'CHANGE-TODOLIST-ENTITY-STATUS', id, status
+} as const)
 export const setTodolistsAC = (todolists: Array<TodolistType>) => ({type: 'SET-TODOLISTS', todolists} as const)
+export const clearTodolistsDataAC = () => ({type: 'CLEAR-DATA'} as const)
 
 // thunks
 export const fetchTodolistsTC = () => {
-    return (dispatch: ThunkDispatch) => {
+    return (dispatch: AppThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
         todolistsAPI.getTodolists()
             .then((res) => {
                 dispatch(setTodolistsAC(res.data))
                 dispatch(setAppStatusAC('succeeded'))
+                return res.data
+            })
+            .then((todos) => {
+                todos.forEach(tl => {
+                    dispatch(fetchTasksTC(tl.id))
+                })
             })
     }
 }
+
 export const removeTodolistTC = (todolistId: string) => {
     return (dispatch: ThunkDispatch) => {
         //изменим глобальный статус приложения, чтобы вверху полоса побежала
@@ -89,6 +102,7 @@ export const changeTodolistTitleTC = (id: string, title: string) => {
 export type AddTodolistActionType = ReturnType<typeof addTodolistAC>;
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>;
 export type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>;
+export type ClearDataActionType = ReturnType<typeof clearTodolistsDataAC>
 type ActionsType =
     | RemoveTodolistActionType
     | AddTodolistActionType
@@ -96,9 +110,10 @@ type ActionsType =
     | ReturnType<typeof changeTodolistFilterAC>
     | SetTodolistsActionType
     | ReturnType<typeof changeTodolistEntityStatusAC>
+    | ClearDataActionType
 export type FilterValuesType = 'all' | 'active' | 'completed';
 export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType
     entityStatus: RequestStatusType
 }
-type ThunkDispatch = Dispatch<ActionsType | SetAppStatusActionType>
+type ThunkDispatch = Dispatch<ActionsType | SetAppStatusActionType | SetTasksActionType>

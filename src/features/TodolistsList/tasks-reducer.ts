@@ -1,9 +1,14 @@
-import { AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType } from './todolists-reducer'
-import { TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType } from '../../api/todolists-api'
-import { Dispatch } from 'redux'
-import { AppRootStateType } from '../../app/store'
-import { SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType } from '../../app/app-reducer'
-import { handleServerAppError, handleServerNetworkError } from '../../utils/error-utils'
+import {
+    AddTodolistActionType,
+    ClearDataActionType,
+    RemoveTodolistActionType,
+    SetTodolistsActionType
+} from './todolists-reducer'
+import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from '../../api/todolists-api'
+import {Dispatch} from 'redux'
+import {AppRootStateType} from '../../app/store'
+import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer'
+import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils'
 
 const initialState: TasksStateType = {}
 
@@ -34,6 +39,8 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         }
         case 'SET-TASKS':
             return {...state, [action.todolistId]: action.tasks}
+        case "CLEAR-DATA":
+            return initialState
         default:
             return state
     }
@@ -134,6 +141,7 @@ export type UpdateDomainTaskModelType = {
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
+export type SetTasksActionType = ReturnType<typeof setTasksAC>
 type ActionsType =
     | ReturnType<typeof removeTaskAC>
     | ReturnType<typeof addTaskAC>
@@ -141,5 +149,6 @@ type ActionsType =
     | AddTodolistActionType
     | RemoveTodolistActionType
     | SetTodolistsActionType
-    | ReturnType<typeof setTasksAC>
+    | SetTasksActionType
+    | ClearDataActionType
 type ThunkDispatch = Dispatch<ActionsType | SetAppStatusActionType | SetAppErrorActionType>
