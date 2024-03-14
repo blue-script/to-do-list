@@ -22,3 +22,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateTy
 // export type AppDispatch = typeof store.dispatch
 // ❗ UnknownAction вместо AnyAction
 export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, UnknownAction>
+// @ts-ignore
+window.store = store

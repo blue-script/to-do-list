@@ -4,6 +4,8 @@ import { handleServerAppError, handleServerNetworkError } from "utils/error-util
 import { appActions } from "app/appSlice"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { todolistsActions } from "features/TodolistsList/todolistsSlice"
+import { Simulate } from "react-dom/test-utils"
+import keyUp = Simulate.keyUp
 
 export const slice = createSlice({
   name: "tasks",
@@ -45,6 +47,11 @@ export const slice = createSlice({
       .addCase(todolistsActions.setTodolists, (state, action) => {
         action.payload.todolists.forEach((tl) => {
           state[tl.id] = []
+        })
+      })
+      .addCase(todolistsActions.clearData, (state, action) => {
+        Object.keys(state).forEach((key) => {
+          delete state[key]
         })
       })
   },
