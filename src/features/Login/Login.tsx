@@ -15,11 +15,12 @@ import {
   TextField,
 } from "@mui/material"
 import { loginTC } from "features/Login/authSlice"
+import { selectIsLoggedIn } from "features/Login/auth.selectors"
 
 export const Login = () => {
   const dispatch = useAppDispatch()
 
-  const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
+  const isLoggedIn = useSelector(selectIsLoggedIn)
 
   const formik = useFormik({
     validate: (values) => {
@@ -77,10 +78,7 @@ export const Login = () => {
               <FormControlLabel
                 label={"Remember me"}
                 control={
-                  <Checkbox
-                    {...formik.getFieldProps("rememberMe")}
-                    checked={formik.values.rememberMe}
-                  />
+                  <Checkbox {...formik.getFieldProps("rememberMe")} checked={formik.values.rememberMe} />
                 }
               />
               <Button type={"submit"} variant={"contained"} color={"primary"}>
