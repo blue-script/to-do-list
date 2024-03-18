@@ -6,6 +6,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { todolistsActions } from "features/TodolistsList/todolistsSlice"
 import { Simulate } from "react-dom/test-utils"
 import keyUp = Simulate.keyUp
+import { clearTasksAndTodolists } from "common/actions/common.actions"
 
 export const slice = createSlice({
   name: "tasks",
@@ -53,6 +54,9 @@ export const slice = createSlice({
         Object.keys(state).forEach((key) => {
           delete state[key]
         })
+      })
+      .addCase(clearTasksAndTodolists, () => {
+        return {}
       })
   },
 })

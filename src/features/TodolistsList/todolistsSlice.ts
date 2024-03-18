@@ -4,6 +4,7 @@ import { AppThunk } from "app/store"
 import { appActions, RequestStatusType } from "app/appSlice"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { fetchTasksTC } from "features/TodolistsList/tasksSlice"
+import { clearTasksAndTodolists } from "common/actions/common.actions"
 
 const slice = createSlice({
   name: "todolists",
@@ -49,6 +50,12 @@ const slice = createSlice({
       state.splice(0, state.length)
     },
   },
+  extraReducers:  builder => {
+    builder
+      .addCase(clearTasksAndTodolists, () => {
+        return []
+      })
+  }
 })
 
 // thunks
