@@ -1,5 +1,5 @@
 import { tasksActions, tasksReducer, TasksStateType, tasksThunks } from "features/TodolistsList/tasks.reducer"
-import { TaskPriorities, TaskStatuses, TaskType } from "api/todolists-api"
+import { TaskPriorities, TaskStatuses } from "api/todolists-api"
 import { todolistsActions } from "features/TodolistsList/todolists.reducer"
 
 let startState: TasksStateType = {}
@@ -96,20 +96,27 @@ test("correct task should be deleted from correct array", () => {
 
 test("correct task should be added to correct array", () => {
   //const action = addTaskAC("juce", "todolistId2");
-  const action = tasksActions.addTask({
-    task: {
-      todoListId: "todolistId2",
-      title: "juce",
-      status: TaskStatuses.New,
-      addedDate: "",
-      deadline: "",
-      description: "",
-      order: 0,
-      priority: 0,
-      startDate: "",
-      id: "id exists",
+  const action = tasksThunks.addTask.fulfilled(
+    {
+      task: {
+        todoListId: "todolistId2",
+        title: "juce",
+        status: TaskStatuses.New,
+        addedDate: "",
+        deadline: "",
+        description: "",
+        order: 0,
+        priority: 0,
+        startDate: "",
+        id: "id exists",
+      },
     },
-  })
+    "requiredId",
+    {
+      title: "juce",
+      todolistId: "todolistId2",
+    },
+  )
 
   const endState = tasksReducer(startState, action)
 
@@ -121,11 +128,12 @@ test("correct task should be added to correct array", () => {
 })
 
 test("status of specified task should be changed", () => {
-  const action = tasksActions.updateTask({
-    taskId: "2",
-    model: { status: TaskStatuses.New },
-    todolistId: "todolistId2",
-  })
+  type UpdateTasks = Omit<ReturnType<typeof tasksThunks.updateTask.fulfilled>, "meta">
+
+  const action: UpdateTasks = {
+    type: tasksThunks.updateTask.fulfilled.type,
+    payload: { taskId: "2", domainModel: { status: TaskStatuses.New }, todolistId: "todolistId2" },
+  }
 
   const endState = tasksReducer(startState, action)
 
@@ -134,7 +142,12 @@ test("status of specified task should be changed", () => {
 })
 
 test("title of specified task should be changed", () => {
-  const action = tasksActions.updateTask({ taskId: "2", model: { title: "yogurt" }, todolistId: "todolistId2" })
+  type UpdateTasks = Omit<ReturnType<typeof tasksThunks.updateTask.fulfilled>, "meta">
+
+  const action: UpdateTasks = {
+    type: tasksThunks.updateTask.fulfilled.type,
+    payload: { taskId: "2", domainModel: { title: "yogurt" }, todolistId: "todolistId2" },
+  }
 
   const endState = tasksReducer(startState, action)
 
@@ -194,11 +207,6 @@ test("empty arrays should be added when we set todolists", () => {
 })
 
 test("tasks should be added for todolist", () => {
-  // const action = tasksThunks.fetchTasks.fulfilled(
-  //   { tasks: startState["todolistId1"], todolistId: "todolistId1" },
-  //   "requestId",
-  //   "todolistId1",
-  // )
   type FetchTasks = Omit<ReturnType<typeof tasksThunks.fetchTasks.fulfilled>, "meta">
 
   const action: FetchTasks = {
