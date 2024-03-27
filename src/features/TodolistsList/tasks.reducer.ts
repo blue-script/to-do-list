@@ -1,20 +1,18 @@
 import {
   AddTaskArgs,
-  TaskPriorities,
-  TaskStatuses,
   TaskType,
   todolistsAPI,
   UpdateTaskArgs,
   UpdateTaskModelType,
-} from "api/todolists-api"
-import { AppDispatch, AppRootStateType, AppThunk } from "app/store"
-import { handleServerAppError, handleServerNetworkError } from "utils/error-utils"
+} from "features/TodolistsList/todolists-api"
+import { AppThunk } from "app/store"
 import { appActions } from "app/app.reducer"
 import { todolistsActions } from "features/TodolistsList/todolists.reducer"
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { clearTasksAndTodolists } from "common/actions/common.actions"
-import type { Dispatch } from "redux"
-import { createAppAsyncThunk } from "utils/createAppAsyncThunk"
+
+import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "common/utils"
+import { TaskPriorities, TaskStatuses } from "common/enums"
 
 const initialState: TasksStateType = {}
 
