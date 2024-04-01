@@ -9,17 +9,16 @@ const slice = createSlice({
   initialState: {
     isLoggedIn: false,
   },
-  reducers: {
-    setIsLoggedIn: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
-      state.isLoggedIn = action.payload.isLoggedIn
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
         state.isLoggedIn = action.payload.isLoggedIn
       })
       .addCase(logout.fulfilled, (state, action) => {
+        state.isLoggedIn = action.payload.isLoggedIn
+      })
+      .addCase(initializeApp.fulfilled, (state, action) => {
         state.isLoggedIn = action.payload.isLoggedIn
       })
   },
@@ -47,13 +46,12 @@ const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>(
   },
 )
 
-const logout = createAppAsyncThunk<{ isLoggedIn: boolean }>(`${slice.name}/logout`, async (_, thunkAPI) => {
+const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>(`${slice.name}/logout`, async (_, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI
   dispatch(appActions.setAppStatus({ status: "loading" }))
   try {
     const res = await authAPI.logout()
     if (res.data.resultCode === 0) {
-      // dispatch(authActions.setIsLoggedIn({ isLoggedIn: false }))
       dispatch(clearTasksAndTodolists())
       dispatch(appActions.setAppStatus({ status: "succeeded" }))
       return { isLoggedIn: false }
@@ -67,6 +65,27 @@ const logout = createAppAsyncThunk<{ isLoggedIn: boolean }>(`${slice.name}/logou
   }
 })
 
+const initializeApp = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>(
+  `${slice.name}/initializeApp`,
+  async (_, thunkAPI) => {
+    const { dispatch, rejectWithValue } = thunkAPI
+    try {
+      const res = await authAPI.me()
+      if (res.data.resultCode === 0) {
+        return { isLoggedIn: true }
+      } else {
+        //   todo
+        // handleServerAppError(res.data, dispatch)
+        return rejectWithValue(null)
+      }
+    } catch (e) {
+      handleServerNetworkError(e, dispatch)
+      return rejectWithValue(null)
+    } finally {
+      dispatch(appActions.setAppInitialized({ isInitialized: true }))
+    }
+  },
+)
+
 export const authReducer = slice.reducer
-export const authActions = slice.actions
-export const authThunks = { login, logout }
+export const authThunks = { login, logout, initializeApp }
