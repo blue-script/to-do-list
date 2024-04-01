@@ -47,7 +47,7 @@ const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>(
   },
 )
 
-const logout = createAppAsyncThunk<{ isLoggedIn: boolean }>(`${slice.name}/logout`, async (arg, thunkAPI) => {
+const logout = createAppAsyncThunk<{ isLoggedIn: boolean }>(`${slice.name}/logout`, async (_, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI
   dispatch(appActions.setAppStatus({ status: "loading" }))
   try {
