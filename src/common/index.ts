@@ -1,2 +1,2 @@
-export { handleServerAppError } from "./utils/handleServerAppError"
-export { handleServerNetworkError } from "./utils/handleServerNetworkError"
+export { handleServerAppError } from "./utils/handle-server-app-error"
+export { handleServerNetworkError } from "./utils/handle-server-network-error"
