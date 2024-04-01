@@ -1,5 +1,5 @@
 import React from "react"
-import { useFormik } from "formik"
+import { FormikHelpers, useFormik } from "formik"
 import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from "@mui/material"
@@ -7,6 +7,9 @@ import { useAppDispatch } from "common/hooks"
 import { selectIsLoggedIn } from "features/auth/auth.selectors"
 import { authThunks } from "features/auth/auth.reducer"
 import { BaseResponseType } from "common/types"
+import { LoginParamsType } from "features/auth/auth.api"
+
+type FormValues = Omit<LoginParamsType, "captcha">
 
 export const Login = () => {
   const dispatch = useAppDispatch()
@@ -14,24 +17,24 @@ export const Login = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn)
 
   const formik = useFormik({
-    validate: (values) => {
-      // if (!values.email) {
-      //   return {
-      //     email: "Email is required",
-      //   }
-      // }
-      // if (!values.password) {
-      //   return {
-      //     password: "Password is required",
-      //   }
-      // }
+    validate: (values: FormValues) => {
+      if (!values.email) {
+        return {
+          email: "Email is required",
+        }
+      }
+      if (!values.password) {
+        return {
+          password: "Password is required",
+        }
+      }
     },
     initialValues: {
       email: "",
       password: "",
       rememberMe: false,
     },
-    onSubmit: (values, formikHelpers) => {
+    onSubmit: (values: FormValues, formikHelpers: FormikHelpers<FormValues>) => {
       dispatch(authThunks.login(values))
         .unwrap()
         .catch((res: BaseResponseType) => {
