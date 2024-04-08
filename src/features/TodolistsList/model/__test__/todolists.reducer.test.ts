@@ -1,5 +1,4 @@
 import { v1 } from "uuid"
-import { RequestStatusType } from "app/app.reducer"
 import {
   FilterValuesType,
   TodolistDomainType,
@@ -8,6 +7,7 @@ import {
   todolistsThunks,
 } from "features/TodolistsList/model/todolistsSlice"
 import { TodolistType } from "features/TodolistsList/api/todolists/todolistsApi.types"
+import { RequestStatusType } from "app/appSlice"
 
 let todolistId1: string
 let todolistId2: string

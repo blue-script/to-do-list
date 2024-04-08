@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { appActions } from "app/app.reducer"
 import { createAppAsyncThunk, handleServerAppError, thunkTryCatch } from "common/utils"
 import { ResultCode, TaskPriorities, TaskStatuses } from "common/enums"
 import { clearTasksAndTodolists } from "common/actions"
@@ -12,7 +11,7 @@ import {
 } from "features/TodolistsList/api/tasks/tasksApi.types"
 import { tasksApi } from "features/TodolistsList/api/tasks/tasksApi"
 import { todolistsThunks } from "features/TodolistsList/model/todolistsSlice"
-import { AppRootStateType } from "app/store"
+import { appActions } from "app/appSlice"
 
 const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[]; todolistId: string }, string>(
   "tasks/fetchTasks",
@@ -34,7 +33,7 @@ const addTask = createAppAsyncThunk<{ task: TaskType }, AddTaskArgType>("tasks/a
       return { task }
     } else {
       handleServerAppError(res.data, dispatch)
-      return rejectWithValue(null)
+      return rejectWithValue(res.data)
     }
   })
 })

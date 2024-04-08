@@ -1,6 +1,6 @@
 import axios from "axios"
-import { appActions } from "app/app.reducer"
 import { AppDispatch } from "app/store"
+import { appActions } from "app/appSlice"
 
 /**
  * Обрабатывает ошибки сети, возникающие при отправке запросов на сервер
