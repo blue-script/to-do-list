@@ -9,6 +9,7 @@ import { appActions } from "app/appSlice"
  * @returns {void} - Данная функция ничего не возвращает
  */
 export const handleServerNetworkError = (err: unknown, dispatch: AppDispatch): void => {
+  debugger
   let errorMessage = "Some error occurred"
   // ❗Проверка на наличие axios ошибки
   if (axios.isAxiosError(err)) {

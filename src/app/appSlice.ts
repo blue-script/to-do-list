@@ -1,5 +1,6 @@
 import { createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit"
 import { todolistsThunks } from "features/TodolistsList/model/todolistsSlice"
+import { tasksThunks } from "features/TodolistsList/model/tasksSlice"
 
 const initialState = {
   status: "idle" as RequestStatusType,
@@ -36,9 +37,8 @@ const slice = createSlice({
         state.status = "failed"
         if (action.payload) {
           // not recommended
-          if (action.type === "todo/addTodolist/rejected") return
-          // It's not working, why?
-          // if (action.type === todolistsThunks.addTodolist.rejected.type) return
+          // if (action.type === "todo/addTodolist/rejected") return
+          if (action.type === todolistsThunks.addTodolist.rejected.type) return
           state.error = action.payload.messages[0]
         } else {
           state.error = action.error.message ? action.error.message : "Some error occurred"
