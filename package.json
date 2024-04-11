@@ -1,10 +1,11 @@
 {
-  "name": "it-incubator-todolist-ts",
+  "name": "to-do-list",
   "jest": {
     "moduleNameMapper": {
       "axios": "axios/dist/node/axios.cjs"
     }
   },
+  "homepage": "https://blue-script.github.io/to-do-list",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -37,7 +38,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -55,6 +58,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^6.1.1",
     "prettier": "^3.1.1"
   }
 }
