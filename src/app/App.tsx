@@ -19,6 +19,7 @@ import { useActions } from "common/hooks"
 import { selectIsLoggedIn } from "features/auth/model/auth.selectors"
 import { selectAppStatus, selectIsInitialized } from "app/app.selectors"
 import { authThunks } from "features/auth/model/auth.slice"
+import { Error } from "features/Error/Error"
 
 function App() {
   const status = useSelector(selectAppStatus)
@@ -47,10 +48,10 @@ function App() {
         <ErrorSnackbar />
         <AppBar position="static">
           <Toolbar>
-            <IconButton edge="start" color="inherit" aria-label="menu">
-              <Menu />
-            </IconButton>
-            <Typography variant="h6">News</Typography>
+            {/*<IconButton edge="start" color="inherit" aria-label="menu">*/}
+            {/*  <Menu />*/}
+            {/*</IconButton>*/}
+            {/*<Typography variant="h6">News</Typography>*/}
             {isLoggedIn && (
               <Button color="inherit" onClick={logoutHandler}>
                 Log out
@@ -63,6 +64,7 @@ function App() {
           <Routes>
             <Route path={"/"} element={<TodolistsList />} />
             <Route path={"/login"} element={<Login />} />
+            <Route path={"*"} element={<Error />} />
           </Routes>
         </Container>
       </div>

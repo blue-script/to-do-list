@@ -38,7 +38,7 @@ const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>(
   },
 )
 
-const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, void>("${slice.name}/logout", async (_, thunkAPI) => {
+const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, void>(`${slice.name}/logout`, async (_, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI
   return thunkTryCatch(thunkAPI, async () => {
     const res = await authAPI.logout()
@@ -53,7 +53,7 @@ const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, void>("${slice.name}
 })
 
 const initializeApp = createAppAsyncThunk<{ isLoggedIn: boolean }, void>(
-  "${slice.name}/initializeApp",
+  `${slice.name}/initializeApp`,
   async (_, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI
     return thunkTryCatch(thunkAPI, async () => {
