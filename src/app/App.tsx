@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom"
 import {
   AppBar,
   Button,
@@ -20,6 +20,7 @@ import { selectIsLoggedIn } from "features/auth/model/auth.selectors"
 import { selectAppStatus, selectIsInitialized } from "app/app.selectors"
 import { authThunks } from "features/auth/model/auth.slice"
 import { Error } from "features/Error/Error"
+import AdbIcon from "@mui/icons-material/Adb"
 
 function App() {
   const status = useSelector(selectAppStatus)
@@ -43,22 +44,19 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="App">
         <ErrorSnackbar />
-        <AppBar position="static">
+        <AppBar position="static" sx={{ background: "#1d2125" }}>
           <Toolbar>
-            {/*<IconButton edge="start" color="inherit" aria-label="menu">*/}
-            {/*  <Menu />*/}
-            {/*</IconButton>*/}
-            {/*<Typography variant="h6">News</Typography>*/}
+            <AdbIcon sx={{ color: "#9eacba" }} />
             {isLoggedIn && (
-              <Button color="inherit" onClick={logoutHandler}>
+              <Button sx={{ color: "#9eacba" }} onClick={logoutHandler}>
                 Log out
               </Button>
             )}
           </Toolbar>
-          {status === "loading" && <LinearProgress />}
+          {status === "loading" && <LinearProgress color={"inherit"} />}
         </AppBar>
         <Container fixed>
           <Routes>
@@ -68,7 +66,7 @@ function App() {
           </Routes>
         </Container>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 

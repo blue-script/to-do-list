@@ -43,7 +43,7 @@ export const TodolistsList = () => {
 
           return (
             <Grid item key={tl.id}>
-              <Paper style={{ padding: "10px" }}>
+              <Paper style={{ padding: "10px" }} sx={{ background: "#d2c8c8" }}>
                 <Todolist todolist={tl} tasks={allTodolistTasks} />
               </Paper>
             </Grid>

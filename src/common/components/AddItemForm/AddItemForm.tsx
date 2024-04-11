@@ -52,9 +52,10 @@ export const AddItemForm = React.memo(function ({ addItem, disabled = false }: A
         onKeyPress={onKeyPressHandler}
         label="Title"
         helperText={error}
+        sx={{ background: "#92979a" }}
       />
       <IconButton color="primary" onClick={addItemHandler} disabled={disabled}>
-        <AddBox />
+        <AddBox sx={{ color: "#539bfb" }} />
       </IconButton>
     </div>
   )
