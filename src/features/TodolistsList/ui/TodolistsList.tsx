@@ -5,10 +5,10 @@ import { AddItemForm } from "common/components"
 import { Todolist } from "features/TodolistsList/ui/Todolist/Todolist"
 import { Navigate } from "react-router-dom"
 import { useActions } from "common/hooks"
-import { selectIsLoggedIn } from "features/auth/model/auth.selectors"
-import { selectTodolists } from "features/TodolistsList/model/todolists.selectors"
 import { todolistsThunks } from "features/TodolistsList/model/todolistsSlice"
 import { selectTasks } from "features/TodolistsList/model/tasksSlice"
+import { selectIsLoggedIn } from "features/auth/model/authSelectors"
+import { selectTodolists } from "features/TodolistsList/model/todolistsSelector"
 
 export const TodolistsList = () => {
   const todolists = useSelector(selectTodolists)

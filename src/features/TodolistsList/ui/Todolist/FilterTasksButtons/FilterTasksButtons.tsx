@@ -1,7 +1,8 @@
 import { Button } from "@mui/material"
 import React from "react"
 import { useActions } from "common/hooks"
-import { FilterValuesType, TodolistDomainType, todolistsActions } from "features/TodolistsList/model/todolistsSlice"
+import { todolistsActions } from "features/TodolistsList/model/todolistsSlice"
+import { FilterValuesType, TodolistDomainType } from "features/TodolistsList/model/todolistsSlice.types"
 
 type Props = { todolist: TodolistDomainType }
 

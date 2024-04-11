@@ -1,7 +1,7 @@
 import { createSlice, isAnyOf, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit"
 import { todolistsThunks } from "features/TodolistsList/model/todolistsSlice"
 import { tasksThunks } from "features/TodolistsList/model/tasksSlice"
-import { authThunks } from "features/auth/model/auth.slice"
+import { authThunks } from "features/auth/model/authSlice"
 
 const initialState = {
   status: "idle" as RequestStatusType,

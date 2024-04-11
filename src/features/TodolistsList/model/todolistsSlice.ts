@@ -5,14 +5,12 @@ import { clearTasksAndTodolists } from "common/actions"
 import { TodolistType, UpdateTodolistTitleArgType } from "features/TodolistsList/api/todolists/todolistsApi.types"
 import { todolistsApi } from "features/TodolistsList/api/todolists/todolistsApi"
 import { RequestStatusType } from "app/appSlice"
+import { FilterValuesType, TodolistDomainType } from "features/TodolistsList/model/todolistsSlice.types"
 
-const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>(
-  "todo/fetchTodolists",
-  async (_, thunkAPI) => {
-    const res = await todolistsApi.getTodolists()
-    return { todolists: res.data }
-  },
-)
+const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>("todo/fetchTodolists", async () => {
+  const res = await todolistsApi.getTodolists()
+  return { todolists: res.data }
+})
 
 const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>(
   "todo/addTodolist",
@@ -56,6 +54,9 @@ const initialState: TodolistDomainType[] = []
 const slice = createSlice({
   name: "todo",
   initialState,
+  // selectors: {
+  //   selectTodolists: (sliceState) => sliceState,
+  // },
   reducers: {
     changeTodolistFilter: (state, action: PayloadAction<{ id: string; filter: FilterValuesType }>) => {
       const todo = state.find((todo) => todo.id === action.payload.id)
@@ -72,7 +73,7 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTodolists.fulfilled, (state, action) => {
+      .addCase(fetchTodolists.fulfilled, (_, action) => {
         return action.payload.todolists.map((tl) => ({ ...tl, filter: "all", entityStatus: "idle" }))
       })
       .addCase(addTodolist.fulfilled, (state, action) => {
@@ -102,10 +103,4 @@ const slice = createSlice({
 export const todolistsReducer = slice.reducer
 export const todolistsActions = slice.actions
 export const todolistsThunks = { fetchTodolists, addTodolist, removeTodolist, changeTodolistTitle }
-
-// types
-export type FilterValuesType = "all" | "active" | "completed"
-export type TodolistDomainType = TodolistType & {
-  filter: FilterValuesType
-  entityStatus: RequestStatusType
-}
+// export const { selectTodolists } = slice.selectors

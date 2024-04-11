@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { createAppAsyncThunk } from "common/utils"
-import { ResultCode, TaskPriorities, TaskStatuses } from "common/enums"
 import { clearTasksAndTodolists } from "common/actions"
 import {
   AddTaskArgType,
@@ -12,10 +11,12 @@ import {
 import { tasksApi } from "features/TodolistsList/api/tasks/tasksApi"
 import { todolistsThunks } from "features/TodolistsList/model/todolistsSlice"
 import { appActions } from "app/appSlice"
+import { ResultCode } from "common/enums"
+import { TasksStateType } from "features/TodolistsList/model/tasksSlice.types"
 
 const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[]; todolistId: string }, string>(
   "tasks/fetchTasks",
-  async (todolistId, thunkAPI) => {
+  async (todolistId) => {
     const res = await tasksApi.getTasks(todolistId)
     const tasks = res.data.items
     return { tasks, todolistId }
@@ -83,7 +84,6 @@ const slice = createSlice({
   initialState,
   reducers: {},
   selectors: {
-    // selectTasks = (state: AppRootStateType) => state.tasks;
     selectTasks: (sliceState) => sliceState,
   },
   extraReducers: (builder) => {
@@ -127,17 +127,3 @@ const slice = createSlice({
 export const tasksReducer = slice.reducer
 export const tasksThunks = { fetchTasks, addTask, updateTask, removeTask }
 export const { selectTasks } = slice.selectors
-
-// types
-export type UpdateDomainTaskModelType = {
-  title?: string
-  description?: string
-  status?: TaskStatuses
-  priority?: TaskPriorities
-  startDate?: string
-  deadline?: string
-}
-
-export type TasksStateType = {
-  [key: string]: Array<TaskType>
-}

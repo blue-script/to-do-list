@@ -3,7 +3,8 @@ import { IconButton } from "@mui/material"
 import { Delete } from "@mui/icons-material"
 import React from "react"
 import { useActions } from "common/hooks"
-import { TodolistDomainType, todolistsThunks } from "features/TodolistsList/model/todolistsSlice"
+import { todolistsThunks } from "features/TodolistsList/model/todolistsSlice"
+import { TodolistDomainType } from "features/TodolistsList/model/todolistsSlice.types"
 
 type Props = {
   todolist: TodolistDomainType

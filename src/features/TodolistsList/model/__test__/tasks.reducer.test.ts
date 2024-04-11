@@ -1,6 +1,7 @@
 import { TaskPriorities, TaskStatuses } from "common/enums"
-import { tasksReducer, TasksStateType, tasksThunks } from "features/TodolistsList/model/tasksSlice"
+import { tasksReducer, tasksThunks } from "features/TodolistsList/model/tasksSlice"
 import { todolistsThunks } from "features/TodolistsList/model/todolistsSlice"
+import { TasksStateType } from "features/TodolistsList/model/tasksSlice.types"
 
 let startState: TasksStateType = {}
 beforeEach(() => {
@@ -96,8 +97,6 @@ test("correct task should be deleted from correct array", () => {
 })
 
 test("correct task should be added to correct array", () => {
-  //const action = addTaskAC("juce", "todolistId2");
-
   const task = {
     todoListId: "todolistId2",
     title: "juce",
