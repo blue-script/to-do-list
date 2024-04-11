@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { createAppAsyncThunk, handleServerAppError, thunkTryCatch } from "common/utils"
+import { createAppAsyncThunk } from "common/utils"
 import { ResultCode } from "common/enums"
 import { clearTasksAndTodolists } from "common/actions"
 import { TodolistType, UpdateTodolistTitleArgType } from "features/TodolistsList/api/todolists/todolistsApi.types"
@@ -16,12 +16,11 @@ const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>(
 
 const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>(
   "todo/addTodolist",
-  async (title, { dispatch, rejectWithValue }) => {
+  async (title, { rejectWithValue }) => {
     const res = await todolistsApi.createTodolist(title)
     if (res.data.resultCode === ResultCode.Success) {
       return { todolist: res.data.data.item }
     } else {
-      handleServerAppError(res.data, dispatch, false)
       return rejectWithValue(res.data)
     }
   },
@@ -36,24 +35,19 @@ const removeTodolist = createAppAsyncThunk<{ id: string }, string>("todo/removeT
   if (res.data.resultCode === ResultCode.Success) {
     return { id }
   } else {
-    handleServerAppError(res.data, dispatch)
-    return rejectWithValue(null)
+    return rejectWithValue(res.data)
   }
 })
 
 const changeTodolistTitle = createAppAsyncThunk<UpdateTodolistTitleArgType, UpdateTodolistTitleArgType>(
   "todo/changeTodolistTitle",
-  async (arg, thunkAPI) => {
-    const { dispatch, rejectWithValue } = thunkAPI
-    return thunkTryCatch(thunkAPI, async () => {
-      const res = await todolistsApi.updateTodolist(arg)
-      if (res.data.resultCode === ResultCode.Success) {
-        return arg
-      } else {
-        handleServerAppError(res.data, dispatch)
-        return rejectWithValue(null)
-      }
-    })
+  async (arg, { rejectWithValue }) => {
+    const res = await todolistsApi.updateTodolist(arg)
+    if (res.data.resultCode === ResultCode.Success) {
+      return arg
+    } else {
+      return rejectWithValue(res.data)
+    }
   },
 )
 
@@ -70,7 +64,6 @@ const slice = createSlice({
       }
     },
     changeTodolistEntityStatus: (state, action: PayloadAction<{ id: string; entityStatus: RequestStatusType }>) => {
-      debugger
       const todo = state.find((todo) => todo.id === action.payload.id)
       if (todo) {
         todo.entityStatus = action.payload.entityStatus

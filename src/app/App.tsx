@@ -56,7 +56,7 @@ function App() {
               </Button>
             )}
           </Toolbar>
-          {status === "loading" && <LinearProgress color={"inherit"} />}
+          {status === "loading" && <LinearProgress color={"inherit"} sx={{}} />}
         </AppBar>
         <Container fixed>
           <Routes>

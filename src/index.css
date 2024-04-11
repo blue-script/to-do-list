@@ -4,8 +4,12 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: rgb(238,174,202);
-  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+
+  background: rgb(113,170,187);
+  background: -moz-radial-gradient(circle, rgba(113,170,187,1) 0%, rgba(160,171,212,0.9416360294117647) 50%, rgba(244,188,216,1) 100%);
+  background: -webkit-radial-gradient(circle, rgba(113,170,187,1) 0%, rgba(160,171,212,0.9416360294117647) 50%, rgba(244,188,216,1) 100%);
+  background: radial-gradient(circle, rgba(113,170,187,1) 0%, rgba(160,171,212,0.9416360294117647) 50%, rgba(244,188,216,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#71aabb",endColorstr="#f4bcd8",GradientType=1);
 }
 
 code {

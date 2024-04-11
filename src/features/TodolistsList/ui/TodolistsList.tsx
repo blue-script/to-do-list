@@ -34,7 +34,7 @@ export const TodolistsList = () => {
 
   return (
     <>
-      <Grid container style={{ padding: "20px" }}>
+      <Grid container sx={{ padding: "20px" }}>
         <AddItemForm addItem={addTodolistCallback} />
       </Grid>
       <Grid container spacing={3}>
