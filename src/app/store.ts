@@ -6,10 +6,10 @@ import { authSlice } from "features/auth/model/authSlice"
 
 export const store = configureStore({
   reducer: {
-    tasks: tasksReducer,
-    todolists: todolistsReducer,
     app: appReducer,
     auth: authSlice,
+    todolists: todolistsReducer,
+    tasks: tasksReducer,
   },
 })
 

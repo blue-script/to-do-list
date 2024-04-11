@@ -54,9 +54,9 @@ const initialState: TodolistDomainType[] = []
 const slice = createSlice({
   name: "todo",
   initialState,
-  // selectors: {
-  //   selectTodolists: (sliceState) => sliceState,
-  // },
+  selectors: {
+    selectTodolists: (sliceState) => sliceState,
+  },
   reducers: {
     changeTodolistFilter: (state, action: PayloadAction<{ id: string; filter: FilterValuesType }>) => {
       const todo = state.find((todo) => todo.id === action.payload.id)
@@ -103,4 +103,6 @@ const slice = createSlice({
 export const todolistsReducer = slice.reducer
 export const todolistsActions = slice.actions
 export const todolistsThunks = { fetchTodolists, addTodolist, removeTodolist, changeTodolistTitle }
-// export const { selectTodolists } = slice.selectors
+
+// bugs
+export const { selectTodolists } = slice.selectors

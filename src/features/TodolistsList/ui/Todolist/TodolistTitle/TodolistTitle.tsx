@@ -1,6 +1,6 @@
 import { EditableSpan } from "common/components"
-import { IconButton } from "@mui/material"
-import { Delete } from "@mui/icons-material"
+import IconButton from "@mui/material/IconButton"
+import Delete from "@mui/icons-material/Delete"
 import React from "react"
 import { useActions } from "common/hooks"
 import { todolistsThunks } from "features/TodolistsList/model/todolistsSlice"
