@@ -9,6 +9,7 @@ import { todolistsThunks } from "features/TodolistsList/model/todolistsSlice"
 import { selectTasks } from "features/TodolistsList/model/tasksSlice"
 import { selectIsLoggedIn } from "features/auth/model/authSelectors"
 import { selectTodolists } from "features/TodolistsList/model/todolistsSelector"
+import s from "./TodolistsList.module.css"
 
 export const TodolistsList = () => {
   const todolists = useSelector(selectTodolists)
@@ -34,16 +35,16 @@ export const TodolistsList = () => {
 
   return (
     <>
-      <Grid container sx={{ padding: "20px" }}>
+      <div className={s.containerAddItemForm}>
         <AddItemForm addItem={addTodolistCallback} />
-      </Grid>
+      </div>
       <Grid container spacing={3}>
         {todolists.map((tl) => {
           let allTodolistTasks = tasks[tl.id]
 
           return (
             <Grid item key={tl.id}>
-              <Paper style={{ padding: "10px" }} sx={{ background: "#d2c8c8" }}>
+              <Paper sx={{ background: "#d2c8c8", padding: "10px" }}>
                 <Todolist todolist={tl} tasks={allTodolistTasks} />
               </Paper>
             </Grid>
