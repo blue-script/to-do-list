@@ -52,7 +52,7 @@ const changeTodolistTitle = createAppAsyncThunk<UpdateTodolistTitleArgType, Upda
 const initialState: TodolistDomainType[] = []
 
 const slice = createSlice({
-  name: "todo",
+  name: "todolists",
   initialState,
   selectors: {
     selectTodolists: (sliceState) => sliceState,
