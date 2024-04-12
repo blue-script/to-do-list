@@ -3,9 +3,8 @@ import AdbIcon from "@mui/icons-material/Adb"
 import React from "react"
 import { useSelector } from "react-redux"
 import { selectAppStatus } from "app/appSlice"
-import { selectIsLoggedIn } from "features/auth/model/authSelectors"
 import { useActions } from "common/hooks"
-import { authThunks } from "features/auth/model/authSlice"
+import { authThunks, selectIsLoggedIn } from "features/auth/model/authSlice"
 
 const Header = () => {
   const status = useSelector(selectAppStatus)

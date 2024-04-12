@@ -1,4 +1,11 @@
-import { appActions, AppInitialStateType, appReducer } from "app/appSlice"
+import { appActions, appReducer } from "app/appSlice"
+import { RequestStatusType } from "app/appSlice.types"
+
+type AppInitialStateType = {
+  status: RequestStatusType
+  error: string | null
+  isInitialized: boolean
+}
 
 let startState: AppInitialStateType
 

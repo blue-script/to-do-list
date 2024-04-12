@@ -2,15 +2,13 @@ import { createSlice, isAnyOf, isFulfilled, isPending, isRejected, PayloadAction
 import { todolistsThunks } from "features/TodolistsList/model/todolistsSlice"
 import { tasksThunks } from "features/TodolistsList/model/tasksSlice"
 import { authThunks } from "features/auth/model/authSlice"
+import { RequestStatusType } from "app/appSlice.types"
 
 const initialState = {
   status: "idle" as RequestStatusType,
   error: null as string | null,
   isInitialized: false,
 }
-
-export type AppInitialStateType = typeof initialState
-export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
 
 const slice = createSlice({
   name: "app",

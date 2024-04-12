@@ -7,8 +7,8 @@ import { Navigate } from "react-router-dom"
 import { useActions } from "common/hooks"
 import { selectTodolists, todolistsThunks } from "../model/todolistsSlice"
 import { selectTasks } from "features/TodolistsList/model/tasksSlice"
-import { selectIsLoggedIn } from "features/auth/model/authSelectors"
 import s from "./TodolistsList.module.css"
+import { selectIsLoggedIn } from "features/auth/model/authSlice"
 
 export const TodolistsList = () => {
   const todolists = useSelector(selectTodolists)

@@ -10,6 +10,9 @@ const slice = createSlice({
   initialState: {
     isLoggedIn: false,
   },
+  selectors: {
+    selectIsLoggedIn: (sliceState) => sliceState,
+  },
   reducers: {},
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -60,3 +63,4 @@ const initializeApp = createAppAsyncThunk<{ isLoggedIn: boolean }, void>(
 
 export const authSlice = slice.reducer
 export const authThunks = { login, logout, initializeApp }
+export const { selectIsLoggedIn } = slice.selectors

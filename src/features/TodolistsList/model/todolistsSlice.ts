@@ -4,8 +4,8 @@ import { ResultCode } from "common/enums"
 import { clearTasksAndTodolists } from "common/actions"
 import { TodolistType, UpdateTodolistTitleArgType } from "features/TodolistsList/api/todolists/todolistsApi.types"
 import { todolistsApi } from "features/TodolistsList/api/todolists/todolistsApi"
-import { RequestStatusType } from "app/appSlice"
 import { FilterValuesType, TodolistDomainType } from "features/TodolistsList/model/todolistsSlice.types"
+import { RequestStatusType } from "app/appSlice.types"
 
 const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>("todo/fetchTodolists", async () => {
   const res = await todolistsApi.getTodolists()
