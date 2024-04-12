@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import { FormikHelpers, useFormik } from "formik"
 import { BaseResponseType } from "common/types"
 import { LoginParamsType } from "features/auth/api/authApi.types"
-import { authThunks, selectIsLoggedIn } from "features/auth/model/authSlice"
+import { authThunks, selectIsLoggedIn } from "features/auth/model/authReducer"
 
 export const useLogin = () => {
   const { login } = useActions(authThunks)

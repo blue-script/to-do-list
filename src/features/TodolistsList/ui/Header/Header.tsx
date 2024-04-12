@@ -4,7 +4,7 @@ import React from "react"
 import { useSelector } from "react-redux"
 import { selectAppStatus } from "app/appSlice"
 import { useActions } from "common/hooks"
-import { authThunks, selectIsLoggedIn } from "features/auth/model/authSlice"
+import { authThunks, selectIsLoggedIn } from "features/auth/model/authReducer"
 
 const Header = () => {
   const status = useSelector(selectAppStatus)
