@@ -3,12 +3,13 @@ import { useSelector } from "react-redux"
 import { FormikHelpers, useFormik } from "formik"
 import { BaseResponseType } from "common/types"
 import { LoginParamsType } from "features/auth/api/authApi.types"
-import { authThunks, selectIsLoggedIn } from "features/auth/model/authReducer"
+import { authThunks, selectCaptcha, selectIsLoggedIn } from "features/auth/model/authSlice"
 
 export const useLogin = () => {
   const { login } = useActions(authThunks)
 
   const isLoggedIn = useSelector(selectIsLoggedIn)
+  const captcha = useSelector(selectCaptcha)
 
   const formik = useFormik({
     validate: (values) => {
@@ -31,6 +32,7 @@ export const useLogin = () => {
       email: "",
       password: "",
       rememberMe: false,
+      captcha: null as string | null,
     },
     onSubmit: (values, formikHelpers: FormikHelpers<LoginParamsType>) => {
       login(values)
@@ -43,11 +45,12 @@ export const useLogin = () => {
     },
   })
 
-  return { formik, isLoggedIn }
+  return { formik, isLoggedIn, captcha }
 }
 
 type FormikErrorType = {
   email?: string
   password?: string
   rememberMe?: boolean
+  capture?: string | null
 }

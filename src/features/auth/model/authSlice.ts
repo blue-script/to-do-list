@@ -9,28 +9,47 @@ const slice = createSlice({
   name: "auth",
   initialState: {
     isLoggedIn: false,
+    captcha: null as string | null,
   },
   selectors: {
-    selectIsLoggedIn: (sliceState) => sliceState,
+    selectIsLoggedIn: (sliceState) => sliceState.isLoggedIn,
+    selectCaptcha: (sliceState) => sliceState.captcha,
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addMatcher(
-      isFulfilled(authThunks.login, authThunks.logout, authThunks.initializeApp),
-      (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
-        state.isLoggedIn = action.payload.isLoggedIn
-      },
-    )
+    builder
+      .addCase(getCaptcha.fulfilled, (state, action) => {
+        state.captcha = action.payload.url
+      })
+      .addMatcher(
+        isFulfilled(authThunks.login, authThunks.logout, authThunks.initializeApp),
+        (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
+          state.isLoggedIn = action.payload.isLoggedIn
+        },
+      )
   },
+})
+
+const getCaptcha = createAppAsyncThunk<
+  {
+    url: string | null
+  },
+  undefined
+>(`${slice.name}/login`, async (_) => {
+  const res = await authAPI.getCaptcha()
+  return { url: res.data.url }
 })
 
 const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>(
   `${slice.name}/login`,
   async (arg, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI
+    const { dispatch, rejectWithValue } = thunkAPI
     const res = await authAPI.login(arg)
     if (res.data.resultCode === ResultCode.Success) {
       return { isLoggedIn: true }
+    } else if (res.data.resultCode === ResultCode.Captcha) {
+      dispatch(getCaptcha())
+      return rejectWithValue(res.data)
     } else {
       return rejectWithValue(res.data)
     }
@@ -63,4 +82,4 @@ const initializeApp = createAppAsyncThunk<{ isLoggedIn: boolean }, void>(
 
 export const authReducer = slice.reducer
 export const authThunks = { login, logout, initializeApp }
-export const { selectIsLoggedIn } = slice.selectors
+export const { selectIsLoggedIn, selectCaptcha } = slice.selectors

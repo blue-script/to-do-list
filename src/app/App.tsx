@@ -4,10 +4,10 @@ import { HashRouter } from "react-router-dom"
 import { CircularProgress } from "@mui/material"
 import { ErrorSnackbar } from "common/components"
 import { useActions } from "common/hooks"
-import { authThunks } from "features/auth/model/authReducer"
 import { selectIsInitialized } from "app/appSlice"
 import Header from "features/TodolistsList/ui/Header/Header"
 import Routing from "features/TodolistsList/ui/Routing/Routing"
+import { authThunks } from "features/auth/model/authSlice"
 
 function App() {
   const isInitialized = useSelector(selectIsInitialized)

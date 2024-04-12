@@ -1,13 +1,14 @@
-import { authReducer, authThunks } from "features/auth/model/authReducer"
+import { authReducer, authThunks } from "features/auth/model/authSlice"
 
 type AuthStateType = {
   isLoggedIn: boolean
+  captcha: string | null
 }
 
 let startState: AuthStateType
 
 beforeEach(() => {
-  startState = { isLoggedIn: false }
+  startState = { isLoggedIn: false, captcha: null }
 })
 
 test("correct isLoggedIn should be set when we log in", () => {
@@ -15,6 +16,7 @@ test("correct isLoggedIn should be set when we log in", () => {
     email: "test",
     password: "test",
     rememberMe: true,
+    captcha: null,
   })
 
   const endState = authReducer(startState, action)
@@ -23,7 +25,7 @@ test("correct isLoggedIn should be set when we log in", () => {
 })
 
 test("correct isLoggedIn should be set when we log in", () => {
-  startState = { isLoggedIn: true }
+  startState = { isLoggedIn: true, captcha: null }
   const action = authThunks.logout.fulfilled({ isLoggedIn: false }, "requestId")
 
   const endState = authReducer(startState, action)

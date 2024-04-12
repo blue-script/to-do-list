@@ -5,7 +5,7 @@ import s from "features/auth/ui/login/login.module.css"
 import { useLogin } from "features/auth/lib/useLogin"
 
 export const Login = () => {
-  const { formik, isLoggedIn } = useLogin()
+  const { formik, isLoggedIn, captcha } = useLogin()
 
   if (isLoggedIn) {
     return <Navigate to={"/"} />
@@ -18,7 +18,7 @@ export const Login = () => {
           <FormControl>
             <FormLabel>
               <p>Use common test account credentials:</p>
-              <p> Email: free@samuraijs.com</p>
+              <p>Email: free@samuraijs.com</p>
               <p>Password: free</p>
             </FormLabel>
             <FormGroup>
@@ -30,6 +30,8 @@ export const Login = () => {
                 label={"Remember me"}
                 control={<Checkbox {...formik.getFieldProps("rememberMe")} checked={formik.values.rememberMe} />}
               />
+              {captcha && <img src={captcha} alt="captcha" />}
+              {captcha && <TextField label="Captcha" margin="normal" {...formik.getFieldProps("captcha")} />}
               <Button
                 type={"submit"}
                 variant={"contained"}
