@@ -37,12 +37,13 @@ export const TodolistsList = () => {
       <div className={s.containerAddItemForm}>
         <AddItemForm addItem={addTodolistCallback} />
       </div>
+      {/*<Grid container spacing={3} sx={{ flexWrap: "nowrap", overflowX: "scroll" }}>*/}
       <Grid container spacing={3}>
         {todolists.map((tl) => {
           let allTodolistTasks = tasks[tl.id]
 
           return (
-            <Grid item key={tl.id}>
+            <Grid item key={tl.id} draggable="true" sx={{ cursor: "grab", marginBottom: "5px" }}>
               <Paper sx={{ background: "#d2c8c8", padding: "10px" }}>
                 <Todolist todolist={tl} tasks={allTodolistTasks} />
               </Paper>
