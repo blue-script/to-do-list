@@ -1,17 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { tasksReducer } from "features/TodolistsList/model/tasksSlice"
-import { todolistsReducer } from "features/TodolistsList/model/todolistsSlice"
-import { appReducer } from "app/appSlice"
-import { authReducer } from "features/auth/model/authSlice"
+import { reducers } from "app/reducers"
 
 export const store = configureStore({
-  reducer: {
-    app: appReducer,
-    auth: authReducer,
-    todolists: todolistsReducer,
-    tasks: tasksReducer,
-  },
+  reducer: reducers,
 })
 
 export type AppRootStateType = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+
+if (process.env.NODE_ENV === "development" && module.hot) {
+  module.hot.accept("./reducers", () => {
+    store.replaceReducer(reducers)
+  })
+}

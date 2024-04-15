@@ -21,7 +21,9 @@ export const TodolistsList = () => {
     if (!isLoggedIn) {
       return
     }
-    fetchTodolists()
+    if (!todolists.length) {
+      fetchTodolists()
+    }
   }, [])
 
   const addTodolistCallback = (title: string) => {
@@ -31,6 +33,8 @@ export const TodolistsList = () => {
   if (!isLoggedIn) {
     return <Navigate to={"/login"} />
   }
+
+  console.log(6)
 
   return (
     <>

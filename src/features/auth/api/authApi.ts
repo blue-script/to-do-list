@@ -1,4 +1,4 @@
-import { instance } from "common/api/common.api"
+import { instance } from "common/api"
 import { BaseResponseType } from "common/types/common.types"
 import { CapchaType, LoginParamsType } from "features/auth/api/authApi.types"
 

@@ -17,7 +17,7 @@ export const Todolist = React.memo(function ({ todolist, tasks }: Props) {
   const { fetchTasks, addTask } = useActions(tasksThunks)
 
   useEffect(() => {
-    fetchTasks(todolist.id)
+    if (!tasks.length) fetchTasks(todolist.id)
   }, [])
 
   const addTaskCallback = (title: string) => {

@@ -14,7 +14,9 @@ function App() {
   const { initializeApp } = useActions(authThunks)
 
   useEffect(() => {
-    initializeApp()
+    if (!isInitialized) {
+      initializeApp()
+    }
   }, [])
 
   if (!isInitialized) {
