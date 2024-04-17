@@ -5,6 +5,7 @@ import { useSelector } from "react-redux"
 import { selectAppStatus } from "app/appSlice"
 import { useActions } from "common/hooks"
 import { authThunks, selectIsLoggedIn } from "features/auth/model/authSlice"
+import logo from "../../../../assets/images/logo.png"
 
 const Header = () => {
   const status = useSelector(selectAppStatus)
@@ -17,7 +18,7 @@ const Header = () => {
   return (
     <AppBar position="static" sx={{ background: "#1d2125" }}>
       <Toolbar>
-        <AdbIcon sx={{ color: "#9eacba" }} />
+        <img src={logo} alt="logo" width="50px" />
         {isLoggedIn && (
           <Button sx={{ color: "#9eacba" }} onClick={logoutHandler}>
             Log out

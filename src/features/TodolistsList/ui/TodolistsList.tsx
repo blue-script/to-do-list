@@ -49,9 +49,13 @@ export const TodolistsList = () => {
             <Grid
               item
               key={tl.id}
+              draggable
+              onDragStart={() => {}}
+              onDrop={() => {}}
               sx={{
                 marginBottom: "5px",
                 width: "306px",
+                cursor: "grab",
               }}
             >
               <Paper sx={{ background: "#d2c8c8", padding: "10px" }}>
