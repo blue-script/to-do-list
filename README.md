@@ -3,6 +3,6 @@
 * module.css
 * JS
 * TS
-* React
+* React (RTK)
 
 Live version at https://blue-script.github.io/to-do-list/
